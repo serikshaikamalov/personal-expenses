@@ -3,6 +3,7 @@ import 'package:personal_expenses/models/transaction.dart';
 import './widgets/statistic.dart';
 import './widgets/add.dart';
 import './widgets/list.dart';
+import './widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,8 +14,12 @@ class MyApp extends StatelessWidget {
 			title: 'Personal expenses app', 
 			home: HomePage(),
 			theme: ThemeData(
-				primarySwatch: Colors.green
-			),
+				primarySwatch: Colors.green,
+				fontFamily: 'OpenSans',
+				textTheme: TextTheme(
+					body1: TextStyle(fontSize: 18)
+				)
+			),						
 		);
   	}
 }
@@ -39,15 +44,23 @@ class HomePageState extends State{
 		new Transaction(
 			id: '5', title: 'Transport', amount: 700, date: DateTime.now()),
 		new Transaction(
+			id: '6', title: 'Transport', amount: 700, date: DateTime.now()),
+		new Transaction(
+			id: '3', title: 'Transport', amount: 700, date: DateTime.now()),
+		new Transaction(
+			id: '4', title: 'Transport', amount: 700, date: DateTime.now()),
+		new Transaction(
+			id: '5', title: 'Transport', amount: 700, date: DateTime.now()),
+		new Transaction(
 			id: '6', title: 'Transport', amount: 700, date: DateTime.now())
 	];
 
-	addTransaction(String title, double amount){
+	addTransaction(String title, double amount, DateTime dt){
 		
 		Transaction nt = Transaction(
 			id: DateTime.now().toString(), 
 			title: title, 
-			date: DateTime.now(),
+			date: dt,
 			amount: amount
 		);
 
@@ -64,7 +77,7 @@ class HomePageState extends State{
 				onTap: (){},
 			);
 		});
-	}
+	}	
 
   	@override
   	Widget build(BuildContext context) {
@@ -72,23 +85,25 @@ class HomePageState extends State{
       		appBar: AppBar(				  
 				  title: Text('Personal expenses app'),
 				  actions: <Widget>[
-					  IconButton(icon: Icon(Icons.add), onPressed: (){},)
+					  IconButton(icon: Icon(Icons.add), onPressed: () => showModal(context))
 				  ],
 			),
-      		body: Column(
-				mainAxisSize: MainAxisSize.min,  				
-				crossAxisAlignment: CrossAxisAlignment.stretch,
-        		children: <Widget>[
-					// StatisticWidget(), 
-					TransactionAdd(this.addTransaction),
-					TransactionList(transactions: this.transactions)
-				],
+      		body: Container(				
+      		  	child: Column(				  
+					mainAxisSize: MainAxisSize.min,  				
+					crossAxisAlignment: CrossAxisAlignment.stretch,
+        			children: <Widget>[						
+						// StatisticWidget(), 
+						// TransactionAdd(this.addTransaction),
+						TransactionList(transactions: this.transactions)
+					],
+      		  	),
       		),
 			floatingActionButton: FloatingActionButton(				
 				child: Icon(Icons.add), 
 				onPressed: ()=>showModal(context),
 			),
-			floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+			floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     	);
   	}
 }
