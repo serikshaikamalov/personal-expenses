@@ -69,6 +69,12 @@ class HomePageState extends State{
 		});
 	}
 
+	removeTransaction(index){
+		setState(() {
+			transactions.removeAt(index);
+		});
+	}
+
 	void showModal(BuildContext ctx){
 		showModalBottomSheet(context: ctx, builder: (bCtx){
 			return GestureDetector(
@@ -95,7 +101,11 @@ class HomePageState extends State{
         			children: <Widget>[						
 						// StatisticWidget(), 
 						// TransactionAdd(this.addTransaction),
-						TransactionList(transactions: this.transactions)
+						TransactionList(
+							transactions: this.transactions,
+							removeTransaction: (index)=>removeTransaction(index),
+							addTransaction: (title, amount, dt)=>addTransaction(title, amount, dt),
+						)
 					],
       		  	),
       		),
